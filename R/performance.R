@@ -4,12 +4,14 @@
 ##' multiple of \code{r}, recycles \code{r} to the size and shape of \code{p}. If \code{r} has
 ##' additional length 1 dimensions (usually because dimensions were dropped from \code{p}), it is
 ##' shortend to the shape of \code{p}.
+##'
+##' In addition, any \code{NA}s in \code{p} are transferred to \code{r} so that these samples are
+##' excluded from counting in \code{\link{nsamples}}.
 ##' @param r reference
 ##' @param p prediction
 ##' @return \code{r}, possibly recycled to length of \code{p} or with dimensions shortened to \code{p}.
 ##' @author Claudia Beleites
-##' @nord
-.checkrp <- function (r, p){
+checkrp <- function (r, p){
   if (is.null (dr <- dim (r))) dr <- length (r)
   if (is.null (dp <- dim (p))) dp <- length (p)
 
@@ -25,6 +27,22 @@
   
   if (! is.na (dr [2]) && dr [2] != dp [2]) 
     stop ("p and r do not have the same number of columns (classes).")
+
+  ## check class names if possible
+  if (!is.null (colnames (r)) & ! is.null (colnames (p))){
+  	reorder <- match (colnames (r), colnames (p))
+  	
+  	if (any (is.na (reorder)))
+  		warning ("colnames of r (", paste (colnames (r)), ") and p  (", paste (colnames (p)), 
+  					") do not match.")
+  	else if (any (reorder != seq_len (dp [2])))
+			warning ("Columns of r seem not to be in the same order as colnames of p.\n",
+							 "To reorder them first, consider\n",
+	             deparse (substitute (p)), " <- slice (", deparse (substitute (p)), 
+							 ", j = c (", paste (reorder, collapse = ", "), "))")
+  }
+  	
+    
 
   if (any (is.na (dp)) || any (dr != dp)) { # NA: p is shorter than r
    
@@ -43,28 +61,47 @@
     }
   }
 
+  ## recycle if necessary
   if (recycle) {
     a <- attributes (r)
     r <- rep (r, length.out = length (p))
     mostattributes (r) <- attributes (p)
     dimnames (r) [seq_along (a$dimnames)] <- a$dimnames
   }
+
+  ## make sure p == NA => r == NA
+  is.na (r) <- is.na (p)
   
   r
 }
-test (.checkrp) <- function (){
-  checkEquals (.checkrp (ref,       pred                    ), ref      )
-  checkEquals (.checkrp (ref.array, pred.array              ), ref.array)
-  checkEquals (.checkrp (ref      , pred.array              ), ref.array, msg = "recycling r")
-  checkEquals (.checkrp (ref.array [,,1, drop = FALSE], pred), ref      , msg = "shortening r")
+.test (checkrp) <- function (){
+  checkEquals (checkrp (ref,       pred                    ), ref      )
+  checkEquals (checkrp (ref.array, pred.array              ), ref.array)
+  checkEquals (checkrp (ref      , pred.array              ), ref.array, msg = "recycling r")
+  checkEquals (checkrp (ref.array [,,1, drop = FALSE], pred), ref      , msg = "shortening r")
 
-  checkException (.checkrp (ref.array, pred                 )           , msg = "length (dim (r)) > length (dim (p))")
-  checkException (.checkrp (1 : 2,     1                    )           , msg = "nrow (r) != nrow (p)")
-  checkException (.checkrp (ref,       pred [, 1 : 2]       )           , msg = "ncol (r) != ncol (p)")
+  checkException (checkrp (ref.array, pred                 )           , msg = "length (dim (r)) > length (dim (p))")
+  checkException (checkrp (1 : 2,     1                    )           , msg = "nrow (r) != nrow (p)")
+  checkException (checkrp (ref,       pred [, 1 : 2]       )           , msg = "ncol (r) != ncol (p)")
   
   tmp <- ref.array
   dim (tmp) <- c (dim(ref.array) [1 : 2], 1, dim (ref.array) [3])
-  checkException (.checkrp (tmp,       pred.array           )           , msg = "Dimension mismatch")
+  checkException (checkrp (tmp,       pred.array           )           , msg = "Dimension mismatch")
+
+  ## check NAs are transferred correctly to reference
+  tmp <- pred.array
+  nas <- sample (length (pred.array), 10)
+  tmp [nas] <- NA
+  checkEquals (which (is.na (checkrp (ref,       tmp                    ))), sort (nas))
+ 
+  ## warnings for colnames mismatches
+  warnlevel <- options ()$warn
+  options (warn = -1)
+  checkEquals (checkrp (r = ref,      p = ref [, 3 : 1]       ), ref)
+  options (warn = 2)
+  checkException (checkrp (ref,       pred                    ))
+  checkException (checkrp (r = ref,   p = ref [, 3 : 1]       ))
+  options (warn = warnlevel)
 }
 
 ##' Performance calculation for soft classification
@@ -94,7 +131,7 @@ test (.checkrp) <- function (){
 ##' \code{TRUE}, \code{confusion} omits input checking
 ##' @return numeric of size (ngroups x \code{dim (p) [-1]}) with the respective performance measure
 ##' @author Claudia Beleites
-##' @seealso Performance measures: \code{\link{sens}}
+##' @seealso Operators: \code{\link{prd}}
 ##' @references see the literature in \code{citation ("softclassval")}
 ##' @export
 ##' @include softclassval.R
@@ -104,13 +141,13 @@ confusion <- function (r = stop ("missing reference"), p = stop ("missing predic
                        drop = FALSE, .checked = FALSE){
   operator <- match.fun (operator)
   if (! .checked)
-    r <- .checkrp (r, p)
+    r <- checkrp (r, p)
   res <- operator (r = r, p = p)
   res <- groupsum (res, group = groups, dim = 1, reorder = FALSE, na.rm = TRUE)
 
   drop1d (res, drop = drop)
 }
-test (confusion) <- function (){
+.test (confusion) <- function (){
   
 }
 ##TODO tests
@@ -139,7 +176,7 @@ sens <- function (r = stop ("missing reference"), p = stop ("missing prediction"
     POSTFUN <- match.fun (op.postproc)
 
   if (!.checked)
-    r <- .checkrp (r, p)                     # do the input checks.
+    r <- checkrp (r, p)                     # do the input checks.
   
   res <- confusion (r = r, p = p, groups = groups, operator = operator, drop = FALSE)
   nsmpl <- nsamples (r = r, groups = groups, operator = operator)
@@ -158,8 +195,8 @@ sens <- function (r = stop ("missing reference"), p = stop ("missing prediction"
 
   res
 }
-test (sens) <- function (){
-  ops <- c ("luk", "gdl", "prd", "and", "wMAE", "wMSE", "wRMSE")
+.test (sens) <- function (){
+  ops <- c ("strong", "weak", "prd", "and", "wMAE", "wMSE", "wRMSE")
 
   ## shape & names
   for (o in ops){
@@ -185,10 +222,10 @@ test (sens) <- function (){
   checkEqualsNumeric (sens (r = ref.array, p = pred.array),
                       c (0.6, 0.32, NA, 0.85, 0.4, NA))
   
-  checkEqualsNumeric (sens (r = ref.array, p = pred.array, operator = "gdl"),
+  checkEqualsNumeric (sens (r = ref.array, p = pred.array, operator = "weak"),
                       c (0.675, 0.5, NA, 1, 1, NA))
 
-  checkEqualsNumeric (sens (r = ref.array, p = pred.array, operator = "luk"),
+  checkEqualsNumeric (sens (r = ref.array, p = pred.array, operator = "strong"),
                       c (0.55, 0.2, NA, 0.75, 0, NA))
   
   checkEqualsNumeric (sens (r = ref.array, p = pred.array, operator = "prd"),
@@ -210,10 +247,10 @@ test (sens) <- function (){
   checkEqualsNumeric (sens (r = ref.array, p = pred.array, groups = ref.groups),
                       c (0.6, 0.6, NA, 0.32, NA, NA, 1, 0.6, NA, 0.4, NA, NA))
 
-  checkEqualsNumeric (sens (r = ref.array, p = pred.array, groups = ref.groups, operator = "gdl"),
+  checkEqualsNumeric (sens (r = ref.array, p = pred.array, groups = ref.groups, operator = "weak"),
                       c (0.6, 0.8, NA, 0.5, NA, NA, 1, 1, NA, 1, NA, NA))
 
-  checkEqualsNumeric (sens (r = ref.array, p = pred.array, groups = ref.groups, operator = "luk"),
+  checkEqualsNumeric (sens (r = ref.array, p = pred.array, groups = ref.groups, operator = "strong"),
                       c (0.6, 1.4/3, NA, 0.2, NA, NA, 1, 1/3, NA, 0, NA, NA))
 
   checkEqualsNumeric (sens (r = ref.array, p = pred.array, groups = ref.groups, operator = "prd"),
@@ -245,10 +282,10 @@ spec <- function (r = stop ("missing reference"), p = stop ("missing prediction"
 ppv <- function (r = stop ("missing reference"), p = stop ("missing prediction"), ...,
                  .checked = FALSE){
   if (! .checked)
-    r <- .checkrp (r, p) 
+    r <- checkrp (r, p) 
   sens (r = p, p = r, ..., .checked = TRUE)
 }
-test (ppv) <- function (){
+.test (ppv) <- function (){
   checkEquals (ppv (r = ref, p = pred.array),
                sens (r = pred.array, p = ref.array))
 }
@@ -258,11 +295,11 @@ test (ppv) <- function (){
 npv <- function (r = stop ("missing reference"), p = stop ("missing prediction"), ...,
                  .checked = FALSE){
   if (! .checked)
-    r <- .checkrp (r, p)
+    r <- checkrp (r, p)
   sens (r = 1 - p, p = 1 - r, ..., .checked = TRUE)
 }
 
-test (npv) <- function (){
+.test (npv) <- function (){
   checkEquals (npv (r = ref, p = pred.array),
                sens (r = 1 - pred.array, p = 1 - ref.array))
 }

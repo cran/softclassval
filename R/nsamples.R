@@ -12,6 +12,7 @@
 ##' dimensions of ref.
 ##' @author Claudia Beleites
 ##' @export
+##' @include make01.R
 ##' @examples
 ##' ref <- softclassval:::ref
 ##' ref
@@ -29,7 +30,7 @@ nsamples <- function  (r = r, groups = NULL, operator = "prd", hard.operator) {
   groupsum (r, group = groups, dim = 1, reorder = FALSE, na.rm = TRUE)
 }
 
-test (nsamples) <- function () {
+.test (nsamples) <- function () {
   
   checkEqualsNumeric (nsamples (ref                             ), c (8, 2, 0))
   checkEqualsNumeric (nsamples (ref,        hard.operator = TRUE), c (5, 0, 0))
