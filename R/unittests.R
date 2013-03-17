@@ -5,6 +5,7 @@
 ##' available. Stops if errors are encountered.
 ##' @author Claudia Beleites
 ##' @seealso  \link[svUnit]{svUnit} 
+##' @keywords programming utilities
 ##' @export 
 ##' @include softclassval.R
 ##' @include unittestdata.R
@@ -25,8 +26,9 @@ softclassval.unittest <- function (){
   for (t in seq_along (tests))
     runTest (tests [[t]], names (tests) [t])
   options (warn = warnlevel)
+
   if (interactive ())
-  print (stats (Log()))
+    print (stats (Log()))
   else
     print (stats (Log ())[,c ("kind", "msg")])
 

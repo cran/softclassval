@@ -4,6 +4,7 @@
 ##' predicted and reference memberships in [0, 1].
 ##' @name softclassval-package
 ##' @docType package
+##' @author C. Beleites
 ##' 
 {
   if (!require ("svUnit", quietly = TRUE)){
