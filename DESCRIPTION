@@ -1,26 +1,24 @@
 Package: softclassval
 Type: Package
-Title: Soft classification performance measures
-Description: Extension of sensitivity, specificity, positive and
-        negative predictive value to continuous predicted and reference
-        memberships in [0, 1]
+Title: Soft Classification Performance Measures
+Description: An extension of sensitivity, specificity, positive and negative
+    predictive value to continuous predicted and reference memberships in
+    [0, 1].
 Maintainer: C. Beleites <chemometrie@beleites.de>
 Author: C. Beleites <chemometrie@beleites.de>
-Version: 1.0-20130317
-Date: 2013-03-17
+Version: 1.0-20150416
+Date: 2015-04-16
 License: GPL
+Encoding: UTF-8
 LazyLoad: yes
 LazyData: yes
-Depends: methods, arrayhelpers (>= 0.76)
-Suggests: svUnit
+Depends: arrayhelpers (>= 0.76)
+Imports: svUnit
 URL: http://softclassval.r-forge.r-project.org/
 Collate: 'softclassval.R' 'make01.R' 'hardclasses.R' 'unittestdata.R'
-        'init.R' 'dev.R' 'nsamples.R' 'postproc.R' 'operators.R'
-        'performance.R' 'factor2matrix.R' 'unittests.R'
-Repository: CRAN
-Repository/R-Forge/Project: softclassval
-Repository/R-Forge/Revision: 159
-Repository/R-Forge/DateTimeStamp: 2013-03-17 11:10:00
-Date/Publication: 2013-04-03 18:19:49
-Packaged: 2013-03-17 15:16:08 UTC; rforge
+        'dev.R' 'factor2matrix.R' 'init.R' 'nsamples.R' 'postproc.R'
+        'operators.R' 'performance.R' 'unittests.R'
+Packaged: 2015-04-16 08:33:31 UTC; cb
 NeedsCompilation: no
+Repository: CRAN
+Date/Publication: 2015-04-16 13:07:29
