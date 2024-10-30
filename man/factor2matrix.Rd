@@ -15,10 +15,9 @@ matrix of size \code{length (f)} x \code{nlevels (f)}
 \description{
 Converts a factor with hard class memberships into a membership matrix
 }
-\author{
-Claudia Beleites
-}
 \seealso{
 \code{\link[softclassval]{hardclasses}} for the inverse
 }
-
+\author{
+Claudia Beleites
+}

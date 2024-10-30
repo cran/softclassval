@@ -49,10 +49,9 @@ harden (softclassval:::pred, tol = 0.25)
 harden (softclassval:::pred - 0.2, tol = 0.5)
 harden (softclassval:::pred - 0.2, tol = 0.5, closed = FALSE)
 }
-\author{
-Claudia Beleites
-}
 \seealso{
 \code{\link[softclassval]{factor2matrix}} for the inverse
 }
-
+\author{
+Claudia Beleites
+}

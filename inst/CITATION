@@ -1,27 +1,13 @@
-citHeader("To cite package 'softclassval' please use:")
-     
-year <- sub("^[^-]*-([[:digit:]]{4}).*$", "\\1", meta$Version)
-vers <- paste("R package version", meta$Version)
-
-citEntry(entry="Article", "softclassval-ChemomIntellLabSyst", 
-         title = "Validation of Soft Classification Models  using Partial Class Memberships: An Extended Concept of Sensitivity \\& Co. applied to Grading of Astrocytoma Tissues",
-         author = personList(as.person("Claudia Beleites"),
-                             as.person("Reiner Salzer"),
-                             as.person("Valter Sergo")),
-         year = 2013,
-         volume = 122,
-         pages = '12 -- 22',
-         journal = "Chemometrics and Intelligent Laboratory Systems",
-         note = vers,
-         URL = 'http://softclassval.r-forge.r-project.org',
-         DOI = '10.1016/j.chemolab.2012.12.003',
-         eprint = 'http://arxiv.org/abs/1301.0264',
-     		
-         textVersion =
-         paste("Claudia Beleites, Reiner Salzer and Valter Sergo:\n",
-               "'Validation of Soft Classification Models  using Partial Class Memberships: An Extended Concept of Sensitivity & Co. applied to grading of astrocytoma tissues',\n",
-               "Chemometrics and Intelligent Laboratory Systems, 122 (2013), 12 - 22,\n",
-               "DOI: 10.1016/j.chemolab.2012.12.003, arXiv: 1301.0264,\n",
-               vers, ", http://softclassval.r-forge.r-project.org.", 
-               sep="")
-   )
+bibentry(
+  bibtype  = "Article",
+  title    = "Validation of Soft Classification Models  using Partial Class Memberships: An Extended Concept of Sensitivity \\& Co. applied to Grading of Astrocytoma Tissues",
+  author   = c(as.person("Claudia Beleites"), as.person("Reiner Salzer"), as.person("Valter Sergo")),
+  journal  = "Chemometrics and Intelligent Laboratory Systems",
+  year = 2013,
+  volume = 122,
+  pages = '12 -- 22',
+  journal = "Chemometrics and Intelligent Laboratory Systems",
+  URL = 'http://softclassval.r-forge.r-project.org',
+  doi = '10.1016/j.chemolab.2012.12.003',
+  eprint = 'http://arxiv.org/abs/1301.0264'
+)

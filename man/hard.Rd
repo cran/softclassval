@@ -28,10 +28,9 @@ myop <- function (r, p) p * (r == 1)
 hard (myop) <- TRUE
 
 }
-\author{
-Claudia Beleites
-}
 \seealso{
 \code{\link{sens}} \code{\link[softclassval:operators]{and}}
 }
-
+\author{
+Claudia Beleites
+}

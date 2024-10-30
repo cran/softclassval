@@ -36,4 +36,3 @@ nsamples (ref, hard.operator = TRUE)
 \author{
 Claudia Beleites
 }
-

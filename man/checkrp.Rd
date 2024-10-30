@@ -41,4 +41,3 @@ sens (r = ref, p = pred, .checked = TRUE)
 \author{
 Claudia Beleites
 }
-

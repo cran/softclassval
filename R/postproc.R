@@ -4,19 +4,19 @@
 ##' \code{\link{dev}} is applied. This is the place where the root is taken of root mean squared errors.
 ##'
 ##' \code{postproc (op)} retrieves the postprocessing function (or \code{NULL} if none is attached)
-##' 
+##'
 ##' @param op the operator (function)
 ##' @return logical indicating the type of operator. \code{NA} if the attribute is missing.
 ##' @author Claudia Beleites
-##' @seealso \code{\link{sens}} \code{\link{post}}
-##' @export 
+##' @seealso \code{\link{sens}} \code{\link{dev}}
+##' @export
 ##'
 ##' @examples
 ##'
 ##' postproc (wRMSE)
 ##' myop <- function (r, p) p * (r == 1)
 ##' postproc (myop) <- `sqrt`
-##' 
+##'
 
 postproc <- function (op)
   attr (op, "postproc")

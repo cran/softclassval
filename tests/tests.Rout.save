@@ -1,7 +1,7 @@
 
-R version 3.3.0 (2016-05-03) -- "Supposedly Educational"
-Copyright (C) 2016 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R version 4.4.1 (2024-06-14) -- "Race for Your Life"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -17,7 +17,7 @@ Type 'q()' to quit R.
 
 > library (softclassval)
 Loading required package: arrayhelpers
-Package arrayhelpers, version 1.0-20160527
+Package arrayhelpers, version 1.1-0
 
 If you use this package please cite it appropriately.
    citation("arrayhelpers")
@@ -26,7 +26,7 @@ will give you the correct reference.
 The project homepage is http://arrayhelpers.r-forge.r-project.org/
 
 
-Package softclassval, version 1.0-20160527
+Package softclassval, version 1.1.0
 
 Use of this package is granted under GPL Version 3 or above.
    RShowDoc ("GPL-3")
@@ -41,29 +41,29 @@ The project homepage is http://softclassval.r-forge.r-project.org/.
 
 > softclassval.unittest ()
                     kind msg
-test(.make01)         OK    
-test(sens)            OK    
-test(checkrp)         OK    
-test(prd)             OK    
-test(ppv)             OK    
-test(harden)          OK    
-test(confmat)         OK    
-test(wRMAE)           OK    
-test(dev)             OK    
-test(strong)          OK    
-test(npv)             OK    
-test(nsamples)        OK    
-test(and)             OK    
-test(weak)            OK    
-test(postproc)        OK    
-test(factor2matrix)   OK    
-test(luk)             OK    
-test(gdl)             OK    
-test(wMAE)            OK    
-test(hard)            OK    
-test(hardclasses)     OK    
-> 
-> 
+test(nsamples)        OK
+test(dev)             OK
+test(and)             OK
+test(harden)          OK
+test(postproc)        OK
+test(factor2matrix)   OK
+test(hard)            OK
+test(wRMAE)           OK
+test(prd)             OK
+test(.make01)         OK
+test(weak)            OK
+test(hardclasses)     OK
+test(sens)            OK
+test(npv)             OK
+test(checkrp)         OK
+test(ppv)             OK
+test(luk)             OK
+test(wMAE)            OK
+test(strong)          OK
+test(confmat)         OK
+test(gdl)             OK
+>
+>
 > proc.time()
-   user  system elapsed 
-  0.468   0.104   0.509 
+   user  system elapsed
+  0.755   0.290   0.564

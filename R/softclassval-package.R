@@ -2,10 +2,15 @@
 ##'
 ##' Extension of sensitivity, specificity, positive and negative predictive value to continuous
 ##' predicted and reference memberships in [0, 1].
-##' @name softclassval-package
-##' @docType package
-##' @author C. Beleites
+##' @author Claudia Beleites
+##' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
 ##' @import arrayhelpers
+## usethis namespace: end
+NULL
+
 {
   if (!requireNamespace ("svUnit", quietly = TRUE)){
     `.test<-` <- function (f, value) {
@@ -16,7 +21,7 @@
   } else {
     `.test<-` <- svUnit::`test<-`
   }
-  
+
   checkEqualsOrdered <- function (target, current, ...)
     checkEquals (target [order (names (target))], current [order (names (current))], ...)
 

@@ -1,13 +1,13 @@
 ##' Run the unit tests
 ##'
-##' Run the unit tests attached to the functions via \link[svUnit]{svUnit} 
+##' Run the unit tests attached to the functions via \link[svUnit]{svUnit}
 ##' @return invisibly \code{TRUE} if the tests pass, \code{NA} if \link[svUnit]{svUnit} is not
 ##' available. Stops if errors are encountered.
 ##' @author Claudia Beleites
-##' @seealso  \link[svUnit]{svUnit} 
+##' @seealso  \link[svUnit]{svUnit}
 ##' @keywords programming utilities
-##' @export 
-##' @include softclassval.R
+##' @export
+##' @include softclassval-package.R
 ##' @include unittestdata.R
 ##' @import svUnit
 softclassval.unittest <- function (){
@@ -21,7 +21,7 @@ softclassval.unittest <- function (){
   tests <- sapply (tests, get, envir = getNamespace ("softclassval"))
 
   clearLog ()
-  
+
   warnlevel <- options()$warn
   options (warn = 0)
   for (t in seq_along (tests))

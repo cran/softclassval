@@ -28,10 +28,9 @@ myop <- function (r, p) p * (r == 1)
 dev (myop) <- TRUE
 
 }
+\seealso{
+\code{\link{sens}} \code{\link{postproc}}
+}
 \author{
 Claudia Beleites
 }
-\seealso{
-\code{\link{sens}} \code{\link{post}}
-}
-

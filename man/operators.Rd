@@ -2,16 +2,16 @@
 % Please edit documentation in R/operators.R
 \encoding{UTF8}
 \name{strong}
-\alias{and}
-\alias{gdl}
-\alias{luk}
-\alias{prd}
 \alias{strong}
-\alias{wMAE}
-\alias{wMSE}
-\alias{wRMAE}
-\alias{wRMSE}
+\alias{luk}
 \alias{weak}
+\alias{gdl}
+\alias{prd}
+\alias{and}
+\alias{wMAE}
+\alias{wRMAE}
+\alias{wMSE}
+\alias{wRMSE}
 \title{And (conjunction) operators}
 \usage{
 strong(r, p)
@@ -104,13 +104,12 @@ cbind (sapply (c ("luk", "gdl", "prd", "wMAE", "wRMAE", "wMSE", "wRMSE"),
 
 
 }
-\author{
-Claudia Beleites
-}
 \references{
 see the literature in \code{citation ("softclassval")}
 }
 \seealso{
 Performance measures: \code{\link{sens}}
 }
-
+\author{
+Claudia Beleites
+}

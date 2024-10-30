@@ -150,7 +150,7 @@ checkrp <- function (r, p){
 ##' For the complete confusion matrix, \code{\link{confmat}}
 ##' @references see the literature in \code{citation ("softclassval")}
 ##' @export
-##' @include softclassval.R
+##' @include softclassval-package.R
 ##' @examples
 ##'
 ##' ref <- softclassval:::ref

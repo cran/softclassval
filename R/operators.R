@@ -22,7 +22,7 @@
 ##' @references see the literature in \code{citation ("softclassval")}
 ##' @rdname operators
 ##' @export
-##' @include softclassval.R
+##' @include softclassval-package.R
 ##' @include dev.R
 ##' @include postproc.R
 ##' @include unittestdata.R

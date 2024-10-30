@@ -95,7 +95,7 @@ hardclasses <- function (x, classdim = 2L, soft.name = NA, tol = 1e-5, drop = TR
 ##' @author Claudia Beleites
 ##' @seealso \code{\link{sens}} \code{\link[softclassval:operators]{and}}
 ##' @export
-##' @include softclassval.R
+##' @include softclassval-package.R
 ##' @include make01.R
 ##'
 ##' @examples

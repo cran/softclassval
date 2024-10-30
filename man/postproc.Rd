@@ -32,10 +32,9 @@ myop <- function (r, p) p * (r == 1)
 postproc (myop) <- `sqrt`
 
 }
+\seealso{
+\code{\link{sens}} \code{\link{dev}}
+}
 \author{
 Claudia Beleites
 }
-\seealso{
-\code{\link{sens}} \code{\link{post}}
-}
-
